@@ -4,15 +4,17 @@
     <name>DO2SQL</name>
     <vendor>lymansix</vendor>
 
+    <!-- <resource-bundle>messages.MyBundle</resource-bundle> -->
+
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.all</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.java</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.lymansix.do2sql.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.lymansix.do2sql.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="com.lymansix.ModelToSql" class="com.github.lymansix.do2sql.action.ModelToSqlAction" text="DO To SQL">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$Paste"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt D"/>
+        </action>
+    </actions>
 </idea-plugin>
