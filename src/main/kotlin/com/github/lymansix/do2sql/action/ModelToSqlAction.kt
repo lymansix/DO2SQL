@@ -11,8 +11,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.wm.RegisterToolWindowTask
-import com.intellij.openapi.wm.ToolWindowAnchor
 import com.intellij.openapi.wm.ToolWindowId
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.psi.PsiClass
@@ -60,7 +58,7 @@ class ModelToSqlAction : AnAction() {
         var toolWindow = toolWindowManager.getToolWindow(ToolWindowId.RUN)
         if(toolWindow == null){
             // 注册窗口
-            toolWindow = toolWindowManager.registerToolWindow(RegisterToolWindowTask(id = ToolWindowId.RUN, anchor = ToolWindowAnchor.BOTTOM, canCloseContent = true, canWorkInDumbMode = true))
+            toolWindow = toolWindowManager.registerToolWindow(ToolWindowId.RUN){}
         }
         // 窗口管理器
         val contentManager = toolWindow.contentManager
