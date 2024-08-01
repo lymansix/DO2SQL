@@ -31,13 +31,13 @@ class ModelToSqlAction : AnAction() {
         val psiClazz = this.getTargetClass(editor, psiFile)
         if (psiClazz != null) {
             // 限制类型
-            if(psiClazz.isInterface || psiClazz.isEnum){
+            if (psiClazz.isInterface || psiClazz.isEnum) {
                 return
             }
             val handle = DOFiledHandle()
             // 获取表字段
-            var fieldList = handle.handel(psiClazz,project)
-            fieldList = fieldList.filter {it.sqlType != null}
+            var fieldList = handle.handel(psiClazz, project)
+            fieldList = fieldList.filter { it.sqlType != null }
             // 获取表属性
             val tableAttr = handle.handleTable(psiClazz, psiFile)
             // 生成sql
@@ -56,9 +56,11 @@ class ModelToSqlAction : AnAction() {
         // 工具窗口
         val toolWindowManager = ToolWindowManager.getInstance(project)
         var toolWindow = toolWindowManager.getToolWindow(ToolWindowId.RUN)
-        if(toolWindow == null){
+        if (toolWindow == null) {
             // 注册窗口
-            toolWindow = toolWindowManager.registerToolWindow(ToolWindowId.RUN){}
+            toolWindow = toolWindowManager.registerToolWindow(ToolWindowId.RUN) {
+                canCloseContent = true
+            }
         }
         // 窗口管理器
         val contentManager = toolWindow.contentManager
@@ -93,9 +95,9 @@ class ModelToSqlAction : AnAction() {
             val virtualFile = event.getData(CommonDataKeys.VIRTUAL_FILE)
             val psiFile = event.getData(CommonDataKeys.PSI_FILE)
             val editor = event.getData(CommonDataKeys.EDITOR)
-            if( psiFile == null || editor == null){
+            if (psiFile == null || editor == null) {
                 event.presentation.isVisible = false
-            }else{
+            } else {
                 val psiClazz = this.getTargetClass(editor, psiFile)!!
                 val enable = "JAVA" == virtualFile!!.fileType.name
                 event.presentation.isVisible = !psiClazz.isInterface && !psiClazz.isEnum && enable
